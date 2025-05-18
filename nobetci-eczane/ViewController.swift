@@ -1,5 +1,6 @@
 import UIKit
 import CoreLocation
+import Foundation
 
 class ViewController: UIViewController,
                       UITableViewDelegate,
@@ -9,6 +10,8 @@ class ViewController: UIViewController,
     // Konum kısmı
 
     let locationManager = CLLocationManager()
+    
+    let apiKey = APIKeys.eczaneAPIKey
 
     // Arayüzdeki Label'ı temsil eden IBOutlet
     @IBOutlet weak var konumBilgisiLabel: UILabel!
@@ -110,7 +113,7 @@ class ViewController: UIViewController,
     func fetchEczaneler(il: String, ilce: String) {
         let headers = [
             "content-type": "application/json",
-            "authorization": "apikey your_token" // Buraya kendi token'ını yaz
+            "authorization": "apikey \(apiKey)" // Buraya kendi token'ını yaz
         ]
         
         // Türkçe karakterleri URL'ye uygun hale getir
@@ -118,6 +121,12 @@ class ViewController: UIViewController,
         let ilceEncoded = ilce.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ilce
 
         let urlString = "https://api.collectapi.com/health/dutyPharmacy?ilce=\(ilceEncoded)&il=\(ilEncoded)"
+        
+        
+        
+        // Hangi il ve ilçe ile istek yapıldığını kontrol et
+        print("API İsteği Yapılıyor: İl='\(ilceEncoded)', İlçe='\(ilEncoded)'")
+        print("Oluşturulan URL: \(urlString)")
         
         guard let url = URL(string: urlString) else { return }
         
@@ -133,6 +142,15 @@ class ViewController: UIViewController,
             }
 
             guard let data = data else { return }
+            
+            
+            
+            // 4. HAM VERİYİ STRING OLARAK YAZDIR
+            if let rawResponseString = String(data: data, encoding: .utf8) {
+                print("API'den Gelen Ham Yanıt: \(rawResponseString)")
+            } else {
+                print("Gelen veri UTF-8 string'e dönüştürülemedi.")
+            }
 
             do {
                 let decoder = JSONDecoder()
@@ -151,14 +169,6 @@ class ViewController: UIViewController,
         task.resume()
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
     
 }
 

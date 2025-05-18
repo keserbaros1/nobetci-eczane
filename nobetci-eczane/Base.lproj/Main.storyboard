@@ -28,38 +28,39 @@
                                             <rect key="frame" x="0.0" y="0.0" width="393" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="eczane" translatesAutoresizingMaskIntoConstraints="NO" id="L0R-6l-Yws">
-                                                    <rect key="frame" x="20" y="21" width="54" height="49"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="80" id="3oK-hM-kMZ"/>
-                                                        <constraint firstAttribute="width" constant="80" id="gyv-6p-Tut"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Eczanenin açık adresiEczanenin açık adresiEczanenin açık adresi" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JIY-dt-Tta">
-                                                    <rect key="frame" x="82" y="50" width="157" height="78"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="eczane" translatesAutoresizingMaskIntoConstraints="NO" id="L0R-6l-Yws">
+                                                    <rect key="frame" x="20" y="4" width="54" height="49"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Uzaklık" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yQh-cs-DMk">
-                                                    <rect key="frame" x="313" y="21" width="60" height="49"/>
+                                                    <rect key="frame" x="313" y="7" width="60" height="49"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Eczane ismi" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9bq-JX-Rao">
-                                                    <rect key="frame" x="82" y="20" width="90" height="21"/>
+                                                    <rect key="frame" x="82" y="20" width="223" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JIY-dt-Tta">
+                                                    <rect key="frame" x="10" y="72.666666666666671" width="373" height="50.333333333333329"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="1000" id="3Pb-zc-qc9"/>
+                                                    </constraints>
+                                                    <string key="text">Eczanenin açık adresiEczanenin açık adresiEczanenin açık adresiEczanenin açık adresiEczanenin açık adresiEczanenin açık adresiEczanenin açık adresiEczanenin açık adresiEczanenin açık adresi</string>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="L0R-6l-Yws" firstAttribute="top" secondItem="1X3-h8-RyU" secondAttribute="topMargin" constant="10" id="Ehn-Oj-4rM"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="L0R-6l-Yws" secondAttribute="bottom" constant="47" id="ul6-aI-uPH"/>
+                                                <constraint firstItem="JIY-dt-Tta" firstAttribute="leading" secondItem="1X3-h8-RyU" secondAttribute="leading" constant="10" id="62H-2P-mfJ"/>
+                                                <constraint firstAttribute="bottom" secondItem="JIY-dt-Tta" secondAttribute="bottom" constant="5" id="8g6-7d-ocF"/>
+                                                <constraint firstAttribute="trailing" secondItem="JIY-dt-Tta" secondAttribute="trailing" constant="10" id="ZHt-3j-kg4"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>

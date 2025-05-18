@@ -13,12 +13,12 @@ class ViewController: UIViewController,
     
     let apiKey = APIKeys.eczaneAPIKey
 
-    // Arayüzdeki Label'ı temsil eden IBOutlet
     @IBOutlet weak var konumBilgisiLabel: UILabel!
 
     // Şehir ve ilçe bilgilerini saklayacak değişkenler
     var il: String?
     var ilce: String?
+    var currentUserLocation: CLLocation? // Kullanıcının mevcut konumu
     
     var eczaneler: [Eczane] = []
 
@@ -41,41 +41,79 @@ class ViewController: UIViewController,
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.first else { return }
 
+
+        // Konum bilgilerini sakla
+        self.currentUserLocation = location 
+
+
         let latitude = location.coordinate.latitude
         let longitude = location.coordinate.longitude
 
+
         print("Enlem: \(latitude), Boylam: \(longitude)")
 
-        // Adres çözümleme (şehir, ilçe vs.)
+        // Adres düzenleme
         let geocoder = CLGeocoder()
         geocoder.reverseGeocodeLocation(location) { placemarks, error in
             if let placemark = placemarks?.first {
                 self.il = placemark.administrativeArea ?? "Bilinmiyor"
-                self.ilce = placemark.subAdministrativeArea ?? "Bilinmiyor"
+                
+            
+                // ilçe bilgisini düzenlendiği kısım
+                if let rawIlceName = placemark.subAdministrativeArea, !rawIlceName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    let components = rawIlceName.split(separator: " ").map(String.init)
+                    
+                    
+                    // En sondaki bileşen ilçe adı oluyor. Onu alıyoruz.
+                    if let districtName = components.last {
+                        self.ilce = districtName
+                        print("Tespit edilen ham ilçe: '\(rawIlceName)'. API için ayarlandı: '\(districtName)'")
+                    } else {
+                        self.ilce = rawIlceName.trimmingCharacters(in: .whitespacesAndNewlines)
+                        print("Tespit edilen ham ilçe: '\(rawIlceName)'. Son kelime ayrıştırılamadı, '\(self.ilce!)' olarak kullanılıyor.")
+                    }
+                } else {
+                    self.ilce = "Bilinmiyor"
+                    print("İlçe bilgisi (subAdministrativeArea) gelmedi veya boş.")
+                }
+                
+                // Belki lazım olur                
                 let mahalle = placemark.subLocality ?? "Bilinmiyor"
 
+                
                 print("İl: \(self.il ?? "Bilinmiyor"), İlçe: \(self.ilce ?? "Bilinmiyor"), Mahalle: \(mahalle)")
 
                 // Label'ı ana iş parçacığında güncelle
                 DispatchQueue.main.async {
                     self.konumBilgisiLabel.text = "\(self.ilce ?? "Bilinmiyor"), \(self.il ?? "Bilinmiyor")"
                     
-                    if let il = self.il, let ilce = self.ilce {
-                        self.fetchEczaneler(il: il, ilce: ilce)
+                    // API isteğini sadece geçerli il ve ilçe bilgisi varsa yap
+                    if let ilToFetch = self.il, ilToFetch != "Bilinmiyor",
+                       let ilceToFetch = self.ilce, ilceToFetch != "Bilinmiyor" {
+                        self.fetchEczaneler(il: ilToFetch, ilce: ilceToFetch)
+                    } else {
+                        print("İl veya İlçe bilgisi 'Bilinmiyor' olduğu için API isteği yapılmayacak.")
+                        self.eczaneler = [] // Eczane listesini temizle
+                        self.TableView.reloadData() // TableView'ı güncelle
                     }
                 }
-                
+            } else if let error = error {
+                print("Adres çözümleme hatası: \(error.localizedDescription)")
+                DispatchQueue.main.async {
+                    self.konumBilgisiLabel.text = "Adres bulunamadı."
+                }
             }
+
         }
 
-        // Bir kez almak yeterliyse durdur:
+        // Bir kez almak yeterli. durduruldu:
         locationManager.stopUpdatingLocation()
     }
 
     // Hata durumunda
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Konum alınamadı: \(error.localizedDescription)")
-        // Hata durumunda label'ı güncelleyebilirsiniz:
+        
         DispatchQueue.main.async {
             self.konumBilgisiLabel.text = "Konum bilgisi alınamadı"
         }
@@ -91,15 +129,41 @@ class ViewController: UIViewController,
                 withIdentifier: "TableViewCell",
                 for: indexPath)
         
+        
         let eczane = eczaneler[indexPath.row]
         
-        // Label'lara erişmek için tag kullanabilir ya da IBOutlet bağlayabilirsin
+
         if let eczaneIsmiLabel = cell.viewWithTag(1) as? UILabel,
            let adresLabel = cell.viewWithTag(2) as? UILabel,
            let uzaklikLabel = cell.viewWithTag(3) as? UILabel {
+            
+            
             eczaneIsmiLabel.text = eczane.name
             adresLabel.text = eczane.address
-            uzaklikLabel.text = "" // Mesafeyi hesaplıyorsan buraya ekle
+            
+
+            // Uzaklık hesaplama
+            if let userLoc = currentUserLocation, !eczane.loc.isEmpty {
+                let pharmacyLocString = eczane.loc
+                let coordinates = pharmacyLocString.split(separator: ",").map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
+                if coordinates.count == 2, let lat = Double(coordinates[0]), let lon = Double(coordinates[1]) {
+                    let pharmacyLocation = CLLocation(latitude: lat, longitude: lon)
+                    let distanceInMeters = userLoc.distance(from: pharmacyLocation)
+                    
+                    if distanceInMeters < 1000 {
+                        uzaklikLabel.text = String(format: "%.0f m", distanceInMeters)
+                    } else {
+                        uzaklikLabel.text = String(format: "%.1f km", distanceInMeters / 1000)
+                    }
+                } else {
+                    uzaklikLabel.text = "--" // Geçersiz koordinat formatı
+                }
+            } else {
+                uzaklikLabel.text = "-" // Konum bilgisi yok
+            }
+            uzaklikLabel.numberOfLines = 0
+
+        
         }
 
         return cell
@@ -113,56 +177,117 @@ class ViewController: UIViewController,
     func fetchEczaneler(il: String, ilce: String) {
         let headers = [
             "content-type": "application/json",
-            "authorization": "apikey \(apiKey)" // Buraya kendi token'ını yaz
+            "authorization": "apikey \(apiKey)"
         ]
-        
+
         // Türkçe karakterleri URL'ye uygun hale getir
         let ilEncoded = il.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? il
         let ilceEncoded = ilce.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ilce
 
         let urlString = "https://api.collectapi.com/health/dutyPharmacy?ilce=\(ilceEncoded)&il=\(ilEncoded)"
         
-        
-        
         // Hangi il ve ilçe ile istek yapıldığını kontrol et
-        print("API İsteği Yapılıyor: İl='\(ilceEncoded)', İlçe='\(ilEncoded)'")
+        print("API İsteği Yapılıyor: İl='\(il)', İlçe='\(ilce)'")
         print("Oluşturulan URL: \(urlString)")
-        
-        guard let url = URL(string: urlString) else { return }
-        
+
+        guard let url = URL(string: urlString) else {
+            print("Geçersiz URL oluşturuldu.")
+            
+            DispatchQueue.main.async {
+                self.konumBilgisiLabel.text = "API isteği için geçersiz URL."
+            }
+            return
+        }
+
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.allHTTPHeaderFields = headers
-        
+
         let session = URLSession.shared
         let task = session.dataTask(with: request) { data, response, error in
+            
+            
+            // 1. Ağ hatasını kontrol kısmı
             if let error = error {
-                print("Hata oluştu: \(error)")
+                print("Ağ hatası oluştu: \(error.localizedDescription)")
+                DispatchQueue.main.async {
+                    
+                }
                 return
             }
 
-            guard let data = data else { return }
-            
-            
-            
-            // 4. HAM VERİYİ STRING OLARAK YAZDIR
+
+            // 2. HTTP yanıtını kontrol kısmı
+            if let httpResponse = response as? HTTPURLResponse {
+                print("HTTP Durum Kodu: \(httpResponse.statusCode)")
+                
+            }
+
+            // 3. Gelen veriyi kontrol etme kısmı
+            guard let data = data else {
+                print("API'den veri alınamadı.")
+                return
+            }
+
+            // 4. HAM VERİYİ STRING OLARAK YAZDIR (ÇOK ÖNEMLİ SİLME. DEVRE DIŞI BIRAKIRSIN)
             if let rawResponseString = String(data: data, encoding: .utf8) {
                 print("API'den Gelen Ham Yanıt: \(rawResponseString)")
             } else {
                 print("Gelen veri UTF-8 string'e dönüştürülemedi.")
             }
 
+
             do {
                 let decoder = JSONDecoder()
                 let apiResponse = try decoder.decode(ApiResponse.self, from: data)
+
                 if apiResponse.success {
-                    self.eczaneler = apiResponse.result
+
+                    self.eczaneler = apiResponse.result ?? []
+
+
                     DispatchQueue.main.async {
                         self.TableView.reloadData()
+                        if self.eczaneler.isEmpty && !apiResponse.success {
+
+                            print("API yanıtı başarılı ancak bu bölgede nöbetçi eczane bulunamadı veya liste boş geldi.")
+                        } 
+
+                } else {
+                    print("API başarısız yanıt verdi (success: false).")
+
+                    self.eczaneler = []
+                    DispatchQueue.main.async {
+                        self.TableView.reloadData() // Boş listeyi göstermek için
                     }
                 }
+            } catch let decodingError as DecodingError {
+                print("JSON decode hatası oluştu: \(decodingError)")
+                
+                
+                
+                // Daha detaylı hata bilgisi kısmı:
+                switch decodingError {
+                case .keyNotFound(let key, let context):
+                    print("--- Key '\(key)' not found at path: \(context.codingPath.map { $0.stringValue }.joined(separator: "."))")
+                    print("--- Debug Description: \(context.debugDescription)")
+                
+                case .dataCorrupted(let context):
+                    print("--- Data corrupted: \(context.debugDescription)")
+                
+                case .typeMismatch(let type, let context):
+                    print("--- Type '\(type)' mismatch: \(context.debugDescription) at path: \(context.codingPath.map { $0.stringValue }.joined(separator: "."))")
+                
+                case .valueNotFound(let value, let context):
+                    print("--- Value '\(value)' not found: \(context.debugDescription) at path: \(context.codingPath.map { $0.stringValue }.joined(separator: "."))")
+                
+                @unknown default:
+                    print("Bilinmeyen bir decode hatası.")
+                }
+            
             } catch {
-                print("JSON decode hatası: \(error)")
+                print("Beklenmedik bir hata oluştu: \(error)")
+            
             }
         }
 

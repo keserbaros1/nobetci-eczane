@@ -159,7 +159,7 @@ class ViewController: UIViewController,
                     uzaklikLabel.text = "--" // Geçersiz koordinat formatı
                 }
             } else {
-                uzaklikLabel.text = "-" // Konum bilgisi yok
+                uzaklikLabel.text = "?" // Konum bilgisi yok
             }
             uzaklikLabel.numberOfLines = 0
 
@@ -169,6 +169,34 @@ class ViewController: UIViewController,
         return cell
 
     }
+
+/*
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let selectedEczane = eczaneler[indexPath.row]
+        
+        // Storyboard'dan EczaneDetailPopupViewController'ı yükle
+        // "EczaneDetailPopupVC" ID'sinin Storyboard'da doğru ayarlandığından emin olun.
+        if let popupVC = storyboard?.instantiateViewController(withIdentifier: "EczaneDetailPopupVC") as? EczaneDetailPopupViewController {
+            popupVC.eczane = selectedEczane
+            popupVC.modalPresentationStyle = .overCurrentContext 
+            popupVC.modalTransitionStyle = .crossDissolve
+            
+            present(popupVC, animated: true, completion: nil)
+        }
+    }
+ */
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDetailSegue" {
+            if let destinationVC = segue.destination as? EczaneDetailPopupViewController,
+            let selectedIndex = TableView.indexPathForSelectedRow?.row {
+                // Seçilen eczaneyi ikinci sayfaya gönder
+                destinationVC.eczane = eczaneler[selectedIndex]
+            }
+        }
+    }
+    
     
     
     
@@ -242,18 +270,19 @@ class ViewController: UIViewController,
                 let apiResponse = try decoder.decode(ApiResponse.self, from: data)
 
                 if apiResponse.success {
-
+                    
                     self.eczaneler = apiResponse.result ?? []
-
-
+                    
+                    
                     DispatchQueue.main.async {
                         self.TableView.reloadData()
                         if self.eczaneler.isEmpty && !apiResponse.success {
-
+                            
                             print("API yanıtı başarılı ancak bu bölgede nöbetçi eczane bulunamadı veya liste boş geldi.")
-                        } 
-
-                } else {
+                        }
+                        
+                    }
+                }   else {
                     print("API başarısız yanıt verdi (success: false).")
 
                     self.eczaneler = []
@@ -261,6 +290,7 @@ class ViewController: UIViewController,
                         self.TableView.reloadData() // Boş listeyi göstermek için
                     }
                 }
+            
             } catch let decodingError as DecodingError {
                 print("JSON decode hatası oluştu: \(decodingError)")
                 

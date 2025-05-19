@@ -21,7 +21,25 @@ class EczaneDetailPopupViewController: UIViewController {
     // @IBOutlet weak var closeButton: UIButton! // Kapatma butonu
 
     override func viewDidLoad() {
-        super.viewDidLoad()
+        // super.viewDidLoad()
+        
+        // // Arka planı yarı saydam yap
+        // view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
+        
+        // // Container view'a köşe yuvarlaklığı verelim
+        // containerView.layer.cornerRadius = 16
+        // containerView.clipsToBounds = true
+        
+        // configureView()
+        // setupEmbeddedMap()
+
+                super.viewDidLoad()
+        print("EczaneDetailPopupViewController viewDidLoad çağrıldı.")
+        if let eczaneData = self.eczane {
+            print("Alınan eczane verisi: \(eczaneData)")
+        } else {
+            print("EczaneDetailPopupViewController viewDidLoad içinde self.eczane nil.")
+        }
         
         // Arka planı yarı saydam yap
         view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
@@ -32,6 +50,11 @@ class EczaneDetailPopupViewController: UIViewController {
         
         configureView()
         setupEmbeddedMap()
+
+
+
+        //
+        //
         
         
         // Butonlara SF Symbol ataması (iOS 13+)
@@ -53,11 +76,26 @@ class EczaneDetailPopupViewController: UIViewController {
         
         
         
-    func configureView() {
-        guard let eczane = eczane else { return }
+    // func configureView() {
+    //     guard let eczane = eczane else { return }
+    //     eczaneAdiLabel.text = eczane.name
+    //     eczaneAdiLabel.numberOfLines = 0 // Uzun isimler için
+    // }
+
+        func configureView() {
+        print("EczaneDetailPopupViewController configureView çağrıldı.")
+        guard let eczane = eczane else {
+            print("configureView: self.eczane nil olduğu için view konfigüre edilemiyor.")
+            eczaneAdiLabel.text = "Eczane Bilgisi Yok" // Kullanıcıya geri bildirim
+            return
+        }
+        print("configureView: Eczane ile konfigüre ediliyor: \(eczane.name), Telefon: \(eczane.phone)")
         eczaneAdiLabel.text = eczane.name
         eczaneAdiLabel.numberOfLines = 0 // Uzun isimler için
     }
+
+
+
 
     func setupEmbeddedMap() {
         guard let eczane = eczane,
@@ -93,8 +131,18 @@ class EczaneDetailPopupViewController: UIViewController {
 
     // Storyboard'dan bağlanacak IBAction'lar
     @IBAction func callButtonTapped(_ sender: UIButton) {
-        guard let eczane = eczane, !eczane.phone.isEmpty else {
-            print("Aramak için telefon numarası yok.")
+        print("callButtonTapped çağrıldı.")
+        guard let eczane = eczane else {
+            print("callButtonTapped: self.eczane nil.")
+            return
+        }
+
+        print("callButtonTapped: Eczane Adı: \(eczane.name), Telefon: '\(eczane.phone)'")
+
+
+        guard !eczane.phone.isEmpty else {
+            print("Aramak için telefon numarası yok. (eczane.phone boş geldi)")
+            // Opsiyonel: Kullanıcıya bir uyarı gösterilebilir
             return
         }
         

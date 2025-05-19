@@ -187,15 +187,41 @@ class ViewController: UIViewController,
         }
     }
  */
+    // override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    //     if segue.identifier == "showDetailSegue" {
+    //         if let destinationVC = segue.destination as? EczaneDetailPopupViewController,
+    //         let selectedIndex = TableView.indexPathForSelectedRow?.row {
+    //             // Seçilen eczaneyi ikinci sayfaya gönder
+    //             destinationVC.eczane = eczaneler[selectedIndex]
+    //         }
+    //     }
+    // }
+
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetailSegue" {
-            if let destinationVC = segue.destination as? EczaneDetailPopupViewController,
-            let selectedIndex = TableView.indexPathForSelectedRow?.row {
-                // Seçilen eczaneyi ikinci sayfaya gönder
-                destinationVC.eczane = eczaneler[selectedIndex]
+    print("prepare for segue çağrıldı. Identifier: \(segue.identifier ?? "nil")")
+    if segue.identifier == "showDetailSegue" {
+        print("Segue identifier 'showDetailSegue' ile eşleşti.")
+        if let selectedIndexPath = TableView.indexPathForSelectedRow {
+            print("Seçili satırın indexPath'i: \(selectedIndexPath)")
+            let selectedEczane = eczaneler[selectedIndexPath.row]
+            print("Seçilen Eczane Bilgileri: \(selectedEczane)") // Seçilen eczanenin tüm detaylarını yazdır
+
+            if let destinationVC = segue.destination as? EczaneDetailPopupViewController {
+                print("Hedef VC EczaneDetailPopupViewController olarak cast edildi.")
+                destinationVC.eczane = selectedEczane
+                print("Eczane verisi hedef VC'ye atandı.")
+            } else {
+                print("Hata: Hedef VC EczaneDetailPopupViewController'a cast edilemedi. Gerçek tip: \(type(of: segue.destination))")
             }
+        } else {
+            print("Hata: TableView.indexPathForSelectedRow nil döndü.")
         }
+    } else {
+        print("Uyarı: Segue identifier 'showDetailSegue' ile eşleşmedi.")
     }
+}
+
     
     
     
@@ -271,7 +297,7 @@ class ViewController: UIViewController,
 
                 if apiResponse.success {
                     
-                    self.eczaneler = apiResponse.result ?? []
+                    self.eczaneler = apiResponse.result
                     
                     
                     DispatchQueue.main.async {

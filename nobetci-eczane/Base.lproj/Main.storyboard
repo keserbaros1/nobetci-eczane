@@ -96,6 +96,7 @@
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
+                                            <color key="backgroundColor" red="0.9185507638113839" green="1" blue="1" alpha="0.51181040378595832" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstItem="JIY-dt-Tta" firstAttribute="leading" secondItem="1X3-h8-RyU" secondAttribute="leading" constant="20" id="5wE-uC-h1d"/>
                                                 <constraint firstItem="7lI-Dk-lkf" firstAttribute="top" secondItem="1X3-h8-RyU" secondAttribute="topMargin" id="9He-n5-VWK"/>
@@ -129,13 +130,14 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="İl ve ilçe seçin" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="phg-YW-jhY">
                                 <rect key="frame" x="16" y="72" width="361" height="49"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.8901960784313725" green="0.97647058823529409" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="31"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.8901960784313725" green="0.97647058823529409" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <connections>
                         <outlet property="TableView" destination="b90-UY-KCJ" id="xMX-Xy-RBy"/>
@@ -160,8 +162,8 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Eczane İsmi" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ygs-b9-eUr">
                                         <rect key="frame" x="27" y="63" width="339" height="63"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="339" id="IDU-3h-jqI"/>
-                                            <constraint firstAttribute="height" constant="63" id="JVI-zK-JSh"/>
+                                            <constraint firstAttribute="width" constant="339" id="kYr-ES-WQs"/>
+                                            <constraint firstAttribute="height" constant="63" id="wwH-Mn-X9V"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <nil key="textColor"/>
@@ -170,56 +172,63 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o5i-8E-uyw">
                                         <rect key="frame" x="206" y="134" width="168" height="73.666666666666686"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="168" id="U06-NJ-XW7"/>
-                                            <constraint firstAttribute="height" constant="73.670000000000002" id="v8S-s0-zD0"/>
+                                            <constraint firstAttribute="width" constant="168" id="ZLi-JX-hVd"/>
+                                            <constraint firstAttribute="height" constant="73.670000000000002" id="e2q-3z-7Ko"/>
                                         </constraints>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" image="map.fill" catalog="system" imagePlacement="bottom" title="Haritada Aç"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="map.fill" catalog="system" imagePlacement="bottom" title="Haritada Aç">
+                                            <backgroundConfiguration key="background">
+                                                <color key="backgroundColor" red="0.96078431372549022" green="1" blue="1" alpha="0.51181040378595832" colorSpace="calibratedRGB"/>
+                                            </backgroundConfiguration>
+                                        </buttonConfiguration>
                                         <connections>
                                             <action selector="mapButtonTapped:" destination="aL7-O8-b1v" eventType="touchUpInside" id="rTY-a5-lzK"/>
                                         </connections>
                                     </button>
-                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hGZ-jl-wo0">
-                                        <rect key="frame" x="19" y="470" width="355" height="277.66666666666674"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="355" id="ea1-02-6Wj"/>
-                                            <constraint firstAttribute="height" constant="277.67000000000002" id="tTJ-b7-sUI"/>
-                                        </constraints>
-                                        <standardMapConfiguration key="preferredConfiguration"/>
-                                    </mapView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="epx-fT-ZkC">
                                         <rect key="frame" x="27" y="136" width="163" height="73.666666666666686"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="73.670000000000002" id="HWy-gy-45a"/>
-                                            <constraint firstAttribute="width" constant="163" id="Tdz-OL-eMj"/>
+                                            <constraint firstAttribute="height" constant="73.670000000000002" id="xDq-rZ-Cwh"/>
+                                            <constraint firstAttribute="width" constant="163" id="yFL-Ol-W8V"/>
                                         </constraints>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" imagePlacement="bottom" title="Ara">
                                             <imageReference key="image" image="phone.fill" catalog="system" symbolScale="large"/>
+                                            <backgroundConfiguration key="background">
+                                                <color key="backgroundColor" red="0.96078431372549022" green="1" blue="1" alpha="0.51181040378595832" colorSpace="calibratedRGB"/>
+                                            </backgroundConfiguration>
                                         </buttonConfiguration>
                                         <connections>
                                             <action selector="callButtonTapped:" destination="aL7-O8-b1v" eventType="touchUpInside" id="hsQ-Ls-QlK"/>
                                         </connections>
                                     </button>
+                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hGZ-jl-wo0">
+                                        <rect key="frame" x="19" y="304" width="355" height="441.66666666666674"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="441.67000000000002" id="0f9-b9-iRJ"/>
+                                            <constraint firstAttribute="width" constant="355" id="Bch-1b-fBx"/>
+                                        </constraints>
+                                        <standardMapConfiguration key="preferredConfiguration"/>
+                                    </mapView>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" red="0.96078431372549022" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="hGZ-jl-wo0" firstAttribute="top" secondItem="OMn-JC-5Ga" secondAttribute="top" constant="470" id="21I-fm-ACv"/>
-                                    <constraint firstItem="o5i-8E-uyw" firstAttribute="leading" secondItem="OMn-JC-5Ga" secondAttribute="leading" constant="206" id="3KN-rV-bK1"/>
-                                    <constraint firstAttribute="bottom" secondItem="hGZ-jl-wo0" secondAttribute="bottom" constant="94.329999999999998" id="6ss-Lm-Ya7"/>
-                                    <constraint firstItem="hGZ-jl-wo0" firstAttribute="leading" secondItem="OMn-JC-5Ga" secondAttribute="leading" constant="19" id="EjC-Um-B7e"/>
-                                    <constraint firstItem="epx-fT-ZkC" firstAttribute="top" secondItem="OMn-JC-5Ga" secondAttribute="top" constant="136" id="FJM-Ut-EaI"/>
-                                    <constraint firstItem="epx-fT-ZkC" firstAttribute="leading" secondItem="OMn-JC-5Ga" secondAttribute="leading" constant="27" id="FT5-sg-vQ9"/>
-                                    <constraint firstItem="o5i-8E-uyw" firstAttribute="top" secondItem="OMn-JC-5Ga" secondAttribute="top" constant="134" id="GHV-pl-O0I"/>
-                                    <constraint firstAttribute="trailing" secondItem="hGZ-jl-wo0" secondAttribute="trailing" constant="19" id="Kov-RJ-YLD"/>
-                                    <constraint firstItem="ygs-b9-eUr" firstAttribute="top" secondItem="OMn-JC-5Ga" secondAttribute="top" constant="63" id="LIK-ZN-Akj"/>
-                                    <constraint firstAttribute="bottom" secondItem="epx-fT-ZkC" secondAttribute="bottom" constant="632.33000000000004" id="LRx-70-cE6"/>
-                                    <constraint firstAttribute="trailing" secondItem="ygs-b9-eUr" secondAttribute="trailing" constant="27" id="ZSn-nd-DZF"/>
-                                    <constraint firstAttribute="bottom" secondItem="o5i-8E-uyw" secondAttribute="bottom" constant="634.33000000000004" id="bRk-be-ZHw"/>
-                                    <constraint firstItem="ygs-b9-eUr" firstAttribute="leading" secondItem="OMn-JC-5Ga" secondAttribute="leading" constant="27" id="bUW-Mj-SZx"/>
-                                    <constraint firstAttribute="trailing" secondItem="epx-fT-ZkC" secondAttribute="trailing" constant="203" id="msc-VO-9We"/>
-                                    <constraint firstAttribute="trailing" secondItem="o5i-8E-uyw" secondAttribute="trailing" constant="19" id="rT3-i5-gax"/>
-                                    <constraint firstAttribute="bottom" secondItem="ygs-b9-eUr" secondAttribute="bottom" constant="716" id="z1Y-Xs-6sg"/>
+                                    <constraint firstAttribute="bottom" secondItem="hGZ-jl-wo0" secondAttribute="bottom" constant="96.329999999999998" id="EEr-hN-ftt"/>
+                                    <constraint firstAttribute="bottom" secondItem="o5i-8E-uyw" secondAttribute="bottom" constant="634.33000000000004" id="EpL-53-OHJ"/>
+                                    <constraint firstItem="ygs-b9-eUr" firstAttribute="top" secondItem="OMn-JC-5Ga" secondAttribute="top" constant="63" id="FFR-wv-EGF"/>
+                                    <constraint firstAttribute="trailing" secondItem="epx-fT-ZkC" secondAttribute="trailing" constant="203" id="Kwv-6L-4gd"/>
+                                    <constraint firstItem="hGZ-jl-wo0" firstAttribute="leading" secondItem="OMn-JC-5Ga" secondAttribute="leading" constant="19" id="LSr-1c-iCm"/>
+                                    <constraint firstItem="epx-fT-ZkC" firstAttribute="top" secondItem="OMn-JC-5Ga" secondAttribute="top" constant="136" id="Os9-7B-myr"/>
+                                    <constraint firstItem="ygs-b9-eUr" firstAttribute="leading" secondItem="OMn-JC-5Ga" secondAttribute="leading" constant="27" id="VMF-06-MQ9"/>
+                                    <constraint firstItem="o5i-8E-uyw" firstAttribute="top" secondItem="OMn-JC-5Ga" secondAttribute="top" constant="134" id="WNg-Wc-msU"/>
+                                    <constraint firstAttribute="trailing" secondItem="o5i-8E-uyw" secondAttribute="trailing" constant="19" id="XiF-7m-j3K"/>
+                                    <constraint firstAttribute="bottom" secondItem="ygs-b9-eUr" secondAttribute="bottom" constant="716" id="aJ3-Hq-ngw"/>
+                                    <constraint firstItem="o5i-8E-uyw" firstAttribute="leading" secondItem="OMn-JC-5Ga" secondAttribute="leading" constant="206" id="h7n-ms-7P8"/>
+                                    <constraint firstItem="hGZ-jl-wo0" firstAttribute="top" secondItem="OMn-JC-5Ga" secondAttribute="top" constant="304" id="lmc-5d-brP"/>
+                                    <constraint firstItem="epx-fT-ZkC" firstAttribute="leading" secondItem="OMn-JC-5Ga" secondAttribute="leading" constant="27" id="m9c-pO-mdJ"/>
+                                    <constraint firstAttribute="trailing" secondItem="hGZ-jl-wo0" secondAttribute="trailing" constant="19" id="rT8-cu-hOF"/>
+                                    <constraint firstAttribute="trailing" secondItem="ygs-b9-eUr" secondAttribute="trailing" constant="27" id="uCz-CM-fec"/>
+                                    <constraint firstAttribute="bottom" secondItem="epx-fT-ZkC" secondAttribute="bottom" constant="632.33000000000004" id="yRv-c2-0Dh"/>
                                 </constraints>
                             </view>
                         </subviews>

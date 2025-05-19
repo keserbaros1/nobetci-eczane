@@ -7,7 +7,6 @@ class ViewController: UIViewController,
                       UITableViewDataSource,
                       CLLocationManagerDelegate {
 
-    // Konum kısmı
 
     let locationManager = CLLocationManager()
     
@@ -15,10 +14,9 @@ class ViewController: UIViewController,
 
     @IBOutlet weak var konumBilgisiLabel: UILabel!
 
-    // Şehir ve ilçe bilgilerini saklayacak değişkenler
     var il: String?
     var ilce: String?
-    var currentUserLocation: CLLocation? // Kullanıcının mevcut konumu
+    var currentUserLocation: CLLocation? 
     
     var eczaneler: [Eczane] = []
 
@@ -106,7 +104,7 @@ class ViewController: UIViewController,
 
         }
 
-        // Bir kez almak yeterli. durduruldu:
+        // Bir kez almak yeterli.
         locationManager.stopUpdatingLocation()
     }
 
@@ -170,32 +168,6 @@ class ViewController: UIViewController,
 
     }
 
-/*
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        
-        let selectedEczane = eczaneler[indexPath.row]
-        
-        // Storyboard'dan EczaneDetailPopupViewController'ı yükle
-        // "EczaneDetailPopupVC" ID'sinin Storyboard'da doğru ayarlandığından emin olun.
-        if let popupVC = storyboard?.instantiateViewController(withIdentifier: "EczaneDetailPopupVC") as? EczaneDetailPopupViewController {
-            popupVC.eczane = selectedEczane
-            popupVC.modalPresentationStyle = .overCurrentContext 
-            popupVC.modalTransitionStyle = .crossDissolve
-            
-            present(popupVC, animated: true, completion: nil)
-        }
-    }
- */
-    // override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    //     if segue.identifier == "showDetailSegue" {
-    //         if let destinationVC = segue.destination as? EczaneDetailPopupViewController,
-    //         let selectedIndex = TableView.indexPathForSelectedRow?.row {
-    //             // Seçilen eczaneyi ikinci sayfaya gönder
-    //             destinationVC.eczane = eczaneler[selectedIndex]
-    //         }
-    //     }
-    // }
 
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -205,7 +177,7 @@ class ViewController: UIViewController,
         if let selectedIndexPath = TableView.indexPathForSelectedRow {
             print("Seçili satırın indexPath'i: \(selectedIndexPath)")
             let selectedEczane = eczaneler[selectedIndexPath.row]
-            print("Seçilen Eczane Bilgileri: \(selectedEczane)") // Seçilen eczanenin tüm detaylarını yazdır
+            print("Seçilen Eczane Bilgileri: \(selectedEczane)") 
 
             if let destinationVC = segue.destination as? EczaneDetailPopupViewController {
                 print("Hedef VC EczaneDetailPopupViewController olarak cast edildi.")
@@ -313,7 +285,7 @@ class ViewController: UIViewController,
 
                     self.eczaneler = []
                     DispatchQueue.main.async {
-                        self.TableView.reloadData() // Boş listeyi göstermek için
+                        self.TableView.reloadData() 
                     }
                 }
             

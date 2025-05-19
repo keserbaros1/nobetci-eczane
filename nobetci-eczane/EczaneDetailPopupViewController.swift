@@ -12,28 +12,15 @@ class EczaneDetailPopupViewController: UIViewController {
 
     var eczane: Eczane?
 
-    // Storyboard'dan bağlanacak IBOutlet'lar
-    @IBOutlet weak var containerView: UIView! // Popup içeriğini tutacak ana view
+    @IBOutlet weak var containerView: UIView! 
     @IBOutlet weak var eczaneAdiLabel: UILabel!
     @IBOutlet weak var callButton: UIButton!
     @IBOutlet weak var mapButton: UIButton!
     @IBOutlet weak var mapView: MKMapView!
-    // @IBOutlet weak var closeButton: UIButton! // Kapatma butonu
 
     override func viewDidLoad() {
-        // super.viewDidLoad()
-        
-        // // Arka planı yarı saydam yap
-        // view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
-        
-        // // Container view'a köşe yuvarlaklığı verelim
-        // containerView.layer.cornerRadius = 16
-        // containerView.clipsToBounds = true
-        
-        // configureView()
-        // setupEmbeddedMap()
 
-                super.viewDidLoad()
+        super.viewDidLoad()
         print("EczaneDetailPopupViewController viewDidLoad çağrıldı.")
         if let eczaneData = self.eczane {
             print("Alınan eczane verisi: \(eczaneData)")
@@ -41,10 +28,8 @@ class EczaneDetailPopupViewController: UIViewController {
             print("EczaneDetailPopupViewController viewDidLoad içinde self.eczane nil.")
         }
         
-        // Arka planı yarı saydam yap
         view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
         
-        // Container view'a köşe yuvarlaklığı verelim
         containerView.layer.cornerRadius = 16
         containerView.clipsToBounds = true
         
@@ -52,41 +37,14 @@ class EczaneDetailPopupViewController: UIViewController {
         setupEmbeddedMap()
 
 
-
-        //
-        //
-        
-        
-        // Butonlara SF Symbol ataması (iOS 13+)
-        if #available(iOS 13.0, *) {
-            callButton.setImage(UIImage(systemName: "phone.fill"), for: .normal)
-            callButton.tintColor = .systemGreen
-            mapButton.setImage(UIImage(systemName: "map.fill"), for: .normal)
-            mapButton.tintColor = .systemBlue
-            //closeButton.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
-            //closeButton.tintColor = .gray
-        } else {
-            // iOS 13 öncesi için metinler kalabilir veya özel ikonlar kullanılabilir
-            callButton.setTitle("Ara", for: .normal)
-            mapButton.setTitle("Harita", for: .normal)
-            //closeButton.setTitle("Kapat", for: .normal)
-        }
     }
      
         
-        
-        
-    // func configureView() {
-    //     guard let eczane = eczane else { return }
-    //     eczaneAdiLabel.text = eczane.name
-    //     eczaneAdiLabel.numberOfLines = 0 // Uzun isimler için
-    // }
 
         func configureView() {
-        print("EczaneDetailPopupViewController configureView çağrıldı.")
         guard let eczane = eczane else {
             print("configureView: self.eczane nil olduğu için view konfigüre edilemiyor.")
-            eczaneAdiLabel.text = "Eczane Bilgisi Yok" // Kullanıcıya geri bildirim
+            eczaneAdiLabel.text = "Eczane Bilgisi Yok" 
             return
         }
         print("configureView: Eczane ile konfigüre ediliyor: \(eczane.name), Telefon: \(eczane.phone)")
@@ -129,29 +87,28 @@ class EczaneDetailPopupViewController: UIViewController {
         }
     }
 
-    // Storyboard'dan bağlanacak IBAction'lar
+
     @IBAction func callButtonTapped(_ sender: UIButton) {
-        print("callButtonTapped çağrıldı.")
+        
         guard let eczane = eczane else {
             print("callButtonTapped: self.eczane nil.")
             return
         }
 
-        print("callButtonTapped: Eczane Adı: \(eczane.name), Telefon: '\(eczane.phone)'")
+        print("callButtonTapped: Telefon: '\(eczane.phone)'")
 
 
         guard !eczane.phone.isEmpty else {
             print("Aramak için telefon numarası yok. (eczane.phone boş geldi)")
-            // Opsiyonel: Kullanıcıya bir uyarı gösterilebilir
             return
         }
         
         let phoneNumber = eczane.phone
         
         let cleanedPhoneNumber = phoneNumber.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
-        if let url = URL(string: "tel://\(cleanedPhoneNumber)"), UIApplication.shared.canOpenURL(url) {
+        if let url = URL(string: "telprompt://\(cleanedPhoneNumber)"), UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        } else {
+        }  else {
             print("Arama yapılamıyor.")
         }
     }
@@ -175,9 +132,5 @@ class EczaneDetailPopupViewController: UIViewController {
             print("Haritada açmak için geçersiz koordinat formatı.")
         }
     }
-    /*
-    @IBAction func closeButtonTapped(_ sender: UIButton) {
-        dismiss(animated: true, completion: nil)
-    }
-     */
+    
 }

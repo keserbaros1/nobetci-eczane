@@ -176,7 +176,7 @@
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="map.fill" catalog="system" imagePlacement="bottom" title="Haritada Aç"/>
                                         <connections>
-                                            <action selector="mapButtonTapped:" destination="aL7-O8-b1v" eventType="touchUpInside" id="0PA-AY-MGL"/>
+                                            <action selector="mapButtonTapped:" destination="aL7-O8-b1v" eventType="touchUpInside" id="rTY-a5-lzK"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="epx-fT-ZkC">
@@ -190,7 +190,7 @@
                                             <imageReference key="image" image="phone.fill" catalog="system" symbolScale="large"/>
                                         </buttonConfiguration>
                                         <connections>
-                                            <action selector="callButtonTapped:" destination="aL7-O8-b1v" eventType="touchUpInside" id="I0U-hl-H6l"/>
+                                            <action selector="callButtonTapped:" destination="aL7-O8-b1v" eventType="touchUpInside" id="hsQ-Ls-QlK"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -236,11 +236,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="Edb-CW-RRW"/>
                     <connections>
-                        <outlet property="callButton" destination="epx-fT-ZkC" id="6Sn-fL-pSd"/>
-                        <outlet property="containerView" destination="OMn-JC-5Ga" id="hZC-9N-hIb"/>
-                        <outlet property="eczaneAdiLabel" destination="ygs-b9-eUr" id="BIx-wf-WWx"/>
-                        <outlet property="mapButton" destination="o5i-8E-uyw" id="VBY-K1-eYA"/>
-                        <outlet property="mapView" destination="hGZ-jl-wo0" id="cFn-DC-E2S"/>
+                        <outlet property="callButton" destination="epx-fT-ZkC" id="Vqf-zt-Qby"/>
+                        <outlet property="containerView" destination="OMn-JC-5Ga" id="neT-77-Dal"/>
+                        <outlet property="eczaneAdiLabel" destination="ygs-b9-eUr" id="3UA-yM-arU"/>
+                        <outlet property="mapButton" destination="o5i-8E-uyw" id="Srv-ey-Jju"/>
+                        <outlet property="mapView" destination="hGZ-jl-wo0" id="dqI-st-FlT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kuL-A6-kcn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

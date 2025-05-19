@@ -18,7 +18,7 @@ class EczaneDetailPopupViewController: UIViewController {
     @IBOutlet weak var callButton: UIButton!
     @IBOutlet weak var mapButton: UIButton!
     @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var closeButton: UIButton! // Kapatma butonu
+    // @IBOutlet weak var closeButton: UIButton! // Kapatma butonu
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,22 +33,26 @@ class EczaneDetailPopupViewController: UIViewController {
         configureView()
         setupEmbeddedMap()
         
+        
         // Butonlara SF Symbol ataması (iOS 13+)
         if #available(iOS 13.0, *) {
             callButton.setImage(UIImage(systemName: "phone.fill"), for: .normal)
             callButton.tintColor = .systemGreen
             mapButton.setImage(UIImage(systemName: "map.fill"), for: .normal)
             mapButton.tintColor = .systemBlue
-            closeButton.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
-            closeButton.tintColor = .gray
+            //closeButton.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
+            //closeButton.tintColor = .gray
         } else {
             // iOS 13 öncesi için metinler kalabilir veya özel ikonlar kullanılabilir
             callButton.setTitle("Ara", for: .normal)
             mapButton.setTitle("Harita", for: .normal)
-            closeButton.setTitle("Kapat", for: .normal)
+            //closeButton.setTitle("Kapat", for: .normal)
         }
     }
-
+     
+        
+        
+        
     func configureView() {
         guard let eczane = eczane else { return }
         eczaneAdiLabel.text = eczane.name
@@ -123,8 +127,9 @@ class EczaneDetailPopupViewController: UIViewController {
             print("Haritada açmak için geçersiz koordinat formatı.")
         }
     }
-    
+    /*
     @IBAction func closeButtonTapped(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
+     */
 }
